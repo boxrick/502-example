@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloweb-deployment
+  labels:
+    app: hello
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: hello-app
+        image: eu.gcr.io/EXAMPLE/helloapp:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 443
+        # Overwrite the port in the docker image
+        env:
+          - name: PORT
+            value: "443"
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - apachectl -k graceful-stop && sleep 5

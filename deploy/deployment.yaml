@@ -29,4 +29,4 @@ spec:
               command:
               - /bin/bash
               - -c
-              - apachectl -k graceful-stop && sleep 5
+              - sleep 10 && apachectl -k graceful-stop
